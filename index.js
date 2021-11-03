@@ -13,12 +13,12 @@ app.use(express.json());
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.anpif.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-client.connect(err => {
-  const collection = client.db("test").collection("devices");
-  // perform actions on the collection object
-    console.log('Hitting the database');
-//   client.close();
-});
+// client.connect(err => {
+//   const collection = client.db("test").collection("devices");
+//   // perform actions on the collection object
+//     console.log('Hitting the database');
+// //   client.close();
+// });
 async function run() {
     try {
       await client.connect();
@@ -31,7 +31,7 @@ async function run() {
         const cursor = foodCollection.find({});
         const foods = await cursor.toArray();
         res.send(foods);
-      });
+      })
 
       // Post new foods API
       app.post('/newfoods', async (req, res) => {
@@ -60,7 +60,7 @@ async function run() {
       })
 
       // delete from order 
-      app.delete('/allorder:id', async (req, res) => {
+      app.delete('/allorderd:id', async (req, res) => {
         const id = req.paramas.id;
         const query = { _id: ObjectId(id) }
         const result = await orderCollection.deleteOne(query);
@@ -70,10 +70,10 @@ async function run() {
         res.send(result);
       })
 
-      app.get('/allorder/:email', async (req, res) => {
+      app.get('/allorderd/:email', async (req, res) => {
         console.log(req.params.email)
         const result = await orderCollection.find({
-          email: req.params.email
+          email:req.params.email
         }).toArray();
 
         console.log(result)
